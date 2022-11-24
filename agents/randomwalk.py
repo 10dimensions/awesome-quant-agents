@@ -1,6 +1,7 @@
 from utils.math import arrayGenerator
 from utils.math import randomUniformDistribution
 
+
 def randomwalk1D(start, limit, steps):
     # Intialize Positions and Timestamp
     positions = [start['x']]
@@ -10,9 +11,9 @@ def randomwalk1D(start, limit, steps):
     directions = randomUniformDistribution(limit['min'], limit['max'], steps)
   
     for idx, x in enumerate(directions):
-        # Percentage change to n-1 value
+        # Percentage change to n-1 value (rounded-off)
         if not idx > len(directions)-2: 
             step = positions[idx] + positions[idx] * (x/100)
-            positions.append(step)
+            positions.append(round(step,4))
       
     return timepoints, positions
