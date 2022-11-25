@@ -1,15 +1,23 @@
+from agents.agent import Agent
 from agents.randomwalk import Randomwalk1D
+
+from trading.orderbook import Order
+from trading.orderbook import OrderBook
+
 from utils.graph import linePlots
 from utils.math import simpleMovingAverage
+
 
 #Sim Parameters
 start = { 't': 0, 'x': 1.0 }
 limit = { 'min': -1.0, 'max': +1.0 }
 
-runs = 1000
+runs = 10
 
 #Final Results
 dat = []
+simpleAgentTrades = []
+momentumAgentTrades = []
 
 
 def generateData():
@@ -21,11 +29,41 @@ def generateData():
   
   
 def simulateSimpleAgent():
-    simpleMovingAverage([1, 2, 3, 7, 9], 3)
-    
+    priceFeed = dat[0]
+    agent1 = Agent('random', 100, 100)
+    agent2 = Agent('random', 100, 100)
+
+    agents = [agent1, agent2]
+
+    orderBook = OrderBook()
+
+    result = []    
+
+    for idx, x in enumerate(priceFeed['timepoints']):      
+        for agent in agents:
+            type = agent.makeOrder()
+            order = Order(agent, 1, priceFeed['positions'][idx], type)
+            orderBook.addOrder(order)
+
+        orderBook.processOrder()
+        orderBook.clearBook()
+
+        r = {
+          'timepoint': x,
+          'price': priceFeed['positions'][idx]
+        }
+        
+        for iag, agent in enumerate(agents):
+            r['assetBalance_' + str(iag)] = agent.assetBalance
+            r['reserveBalance_' + str(iag)] = agent.reserveBalance
+
+        result.append(r)
+
+    print(result)
+          
 
 if __name__ == "__main__":
     generateData()
+    simulateSimpleAgent()
     
-    print(dat[0])
-    
+    # simpleMovingAverage([1, 2, 3, 7, 9], 3)

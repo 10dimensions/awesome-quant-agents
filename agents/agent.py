@@ -1,7 +1,8 @@
-from utils.constans import Decisions
+from utils.constants import Decisions
 import uuid
+import random
 
-class SimpleAgent:
+class Agent:
   
     def __init__(self, type, assetBalance, reserveBalance):
         self.id = uuid.uuid4()
@@ -10,11 +11,11 @@ class SimpleAgent:
         self.reserveBalance = reserveBalance
 
       
-    def makeOrder(self, price):
+    def makeOrder(self, price=None):
         decision = random.choice(list(Decisions))
         return decision
 
   
     def settleOrder(self, asset, reserve):
-        self.assetBalance += assetBalance
-        self.reserve += reserve
+        self.assetBalance += asset
+        self.reserveBalance += reserve
