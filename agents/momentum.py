@@ -1,11 +1,9 @@
+from agents.agent import Agent
 
-
-class MomentumAgent:
+class MomentumAgent(Agent):
     def __init__(self):
-      self.name = name
-      self.age = age
+      super(MomentumAgent, self).__init__()
+      self.b = 2
 
-p1 = Person("John", 36)
-
-print(p1.name)
-print(p1.age)
+    def do(self, b):
+        print(self.a + b)

@@ -30,12 +30,11 @@ def generateData():
   
 def simulateSimpleAgent():
     priceFeed = dat[0]
+    orderBook = OrderBook()
+  
     agent1 = Agent('random', 100, 100)
     agent2 = Agent('random', 100, 100)
-
     agents = [agent1, agent2]
-
-    orderBook = OrderBook()
 
     result = []    
 
@@ -61,6 +60,41 @@ def simulateSimpleAgent():
 
     print(result)
           
+
+def simulateMomentumAgent():
+    priceFeed = dat[0]
+    orderBook = OrderBook()
+  
+    agent1 = Agent('random', 100, 100)
+    agent2 = Agent('random', 100, 100)
+    agent3 = MomentumAgent('momentum', 100, 100)
+    agents = [agent1, agent2, agent3]
+
+    result = []    
+
+    for idx, x in enumerate(priceFeed['timepoints']):      
+        for agent in agents:
+            type = agent.makeOrder()
+            order = Order(agent, 1, priceFeed['positions'][idx], type)
+            orderBook.addOrder(order)
+
+        orderBook.processOrder()
+        orderBook.clearBook()
+
+        r = {
+          'timepoint': x,
+          'price': priceFeed['positions'][idx]
+        }
+        
+        for iag, agent in enumerate(agents):
+            r['assetBalance_' + str(iag)] = agent.assetBalance
+            r['reserveBalance_' + str(iag)] = agent.reserveBalance
+
+        result.append(r)
+
+    print(result)
+          
+
 
 if __name__ == "__main__":
     generateData()
