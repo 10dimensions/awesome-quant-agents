@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 def linePlots(dat, xLegend, yLegend, title):
     for i, d in enumerate(dat):
-        plt.plot(d[0], d[1], label="Run "+ str(i))
+        plt.plot(d['timepoints'], d['positions'], label="Run "+ str(i))
 
     # Set axes labels and title.
     plt.xlabel(xLegend)
@@ -11,4 +11,4 @@ def linePlots(dat, xLegend, yLegend, title):
     plt.legend()
   
     # Display a figure.
-    plt.show()
+    plt.show(block=False)
