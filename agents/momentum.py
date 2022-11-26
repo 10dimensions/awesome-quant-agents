@@ -10,9 +10,9 @@ class MomentumAgent(Agent):
         self.momentumHigh = momentumHigh
         self.avgPriceLow = self.computeMovingAverage(momentumLow)
         self.avgPriceHigh =  self.computeMovingAverage(momentumHigh)
-        print(self.priceFeed)
-        print(self.avgPriceLow)
-        print(self.avgPriceHigh)
+        #print(self.priceFeed)
+        #print(self.avgPriceLow)
+        #print(self.avgPriceHigh)
         super(MomentumAgent, self).__init__(type, assetBalance, reserveBalance)
 
 
