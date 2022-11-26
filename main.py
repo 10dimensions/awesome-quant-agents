@@ -1,4 +1,5 @@
 from agents.agent import Agent
+from agents.momentum import MomentumAgent
 from agents.randomwalk import Randomwalk1D
 
 from trading.orderbook import Order
@@ -67,14 +68,14 @@ def simulateMomentumAgent():
   
     agent1 = Agent('random', 100, 100)
     agent2 = Agent('random', 100, 100)
-    agent3 = MomentumAgent('momentum', 100, 100)
+    agent3 = MomentumAgent('momentum', 100, 100, 2, 5, priceFeed['positions'])
     agents = [agent1, agent2, agent3]
 
     result = []    
 
     for idx, x in enumerate(priceFeed['timepoints']):      
         for agent in agents:
-            type = agent.makeOrder()
+            type = agent.makeOrder(x)
             order = Order(agent, 1, priceFeed['positions'][idx], type)
             orderBook.addOrder(order)
 
@@ -98,6 +99,7 @@ def simulateMomentumAgent():
 
 if __name__ == "__main__":
     generateData()
-    simulateSimpleAgent()
+    #simulateSimpleAgent()
+    simulateMomentumAgent()
     
-    # simpleMovingAverage([1, 2, 3, 7, 9], 3)
+    

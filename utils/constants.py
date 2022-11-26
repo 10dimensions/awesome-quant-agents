@@ -4,4 +4,4 @@ import random
 class Decisions(Enum):
     BUY = 1
     SELL = 2
-    #'HOLD' = 3
+    HOLD = 3

@@ -11,7 +11,7 @@ class Agent:
         self.reserveBalance = reserveBalance
 
       
-    def makeOrder(self, price=None):
+    def makeOrder(self, timepoint=None):
         decision = random.choice(list(Decisions))
         return decision
 

@@ -19,10 +19,27 @@ def simpleMovingAverage(series, window):
 
     #Iteration based on window size
     while j < len(series) - window + 1:
+        '''
         # Average of current window
-        window = round(np.sum(series[j:j+int(window)]) / window, 2)
+        avg = arr[i : i + window_size]
+        window = round(sum(series[j:j+int(window)]) / window, 4)
         result.append(window)
         #Increment window right-bound
+        j += 1
+        '''
+        
+        # Store elements from i to i+window_size
+        # in list to get the current window
+        slice = series[j : j + int(window)]
+      
+        # Calculate the average of current window
+        window_average = round(sum(slice) / window, 4)
+          
+        # Store the average of current
+        # window in moving average list
+        result.append(window_average)
+          
+        # Shift window to right by one position
         j += 1
   
     return result
