@@ -14,13 +14,18 @@ class Agent:
 
   
     def checkBalance(self, unit, quote):
-        if self.assetBalance < unit or self.reserveBalance < quote:
+        if self.assetBalance < unit:
             return False
+          
+        if self.reserveBalance < quote:
+            return False
+
+        return True
 
       
     def makeOrder(self, qty, idx):
         price = getPriceAtIndex(idx)
-      
+
         if not self.checkBalance(qty, price):
             return Decisions.HOLD
       
@@ -28,5 +33,5 @@ class Agent:
 
   
     def settleOrder(self, asset, reserve):
-        self.assetBalance += asset
-        self.reserveBalance += reserve
+        self.assetBalance = round(self.assetBalance + asset, 4)
+        self.reserveBalance = round(self.reserveBalance + reserve, 4)

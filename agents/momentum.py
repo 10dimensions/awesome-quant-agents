@@ -4,8 +4,8 @@ from utils.math import simpleMovingAverage
 
 class MomentumAgent(Agent):
     def __init__(self, type, assetBalance, reserveBalance, 
-                   momentumLow, momentumHigh, priceFeed):
-        super(MomentumAgent, self).__init__(type, assetBalance, reserveBalance, priceFeed)
+                   momentumLow, momentumHigh):
+        super(MomentumAgent, self).__init__(type, assetBalance, reserveBalance)
                      
         self.momentumLow = momentumLow
         self.momentumHigh = momentumHigh
