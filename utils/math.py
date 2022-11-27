@@ -2,7 +2,7 @@ import numpy as np
 
 def percentageChange(current,previous):
     if current and previous !=0:
-        return round((current/previous)-1*100,2)
+        return round((current/previous)*100,2)
     else:
         return None
 
@@ -15,7 +15,7 @@ def randomUniformDistribution(low, high, size):
     return rand
 
 
-def runningMovingAverage(idx, slice, window):
+def liveMovingAverage(idx, slice, window):
     if idx < window -1:
         return None
     
@@ -46,7 +46,18 @@ def seriesMovingAverage(series, window):
     return result
 
 
-def trailingWindowPosition(series, window):
+def liveTrailingPosition(idx, current, slice, window):
+    if idx < window -1:
+        return None
+           
+    # Trailing Position Compute
+    trailing_price = round(current - min(slice), 4)
+    range = round(max(slice) - min(slice), 4)
+    window_trailing_position = trailing_price / range
+  
+    return window_trailing_position
+  
+def seriesTrailingPosition(series, window):
     i=0
     j=0
     result = []

@@ -38,15 +38,19 @@ class OrderBook:
 
 
     def clearBook(self):
+      
         # TODO
         # Refund uncleared Orders
+      
         self.buyOrders = []
         self.sellOrders = []
       
 
     def processOrder(self):
+      
         # TODO
         # Atomic Balance Deductions
+      
         while len(self.buyOrders) > 0 and len(self.sellOrders) > 0:
           
             rn1 = random.randint(0,len(self.sellOrders)-1)
@@ -67,4 +71,3 @@ class OrderBook:
             self.buyOrders.pop(rn2)
 
         
-          
