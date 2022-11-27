@@ -1,6 +1,7 @@
-from enum import Enum
 import random
+from enum import Enum
 
+# Constants
 class Decisions(Enum):
     BUY = 1
     SELL = 2

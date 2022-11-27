@@ -1,6 +1,8 @@
 import json
 import numpy as np
 
+
+#Numpy to json encoder
 class NpEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, np.integer):
@@ -11,7 +13,8 @@ class NpEncoder(json.JSONEncoder):
             return obj.tolist()
         return super(NpEncoder, self).default(obj)
 
+
+#Write data to file
 def saveResult(dat, name):
     with open('results/' + name, 'w') as fp:
-        #json.dumps({k: v.tolist() for k, v in dat.items()})
         json.dump(dat, fp, cls=NpEncoder)

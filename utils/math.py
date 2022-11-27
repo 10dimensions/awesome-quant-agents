@@ -1,20 +1,26 @@
 import numpy as np
 
+#Represent qty as percentage of another qty
 def percentageChange(current,previous):
     if current and previous !=0:
         return round((current/previous)*100,2)
     else:
         return None
 
+      
+#Generate numpy array with conditions
 def arrayGenerator(start, stop, step):
     arr = np.arange(start, stop, step)
     return arr
 
+  
+#Generate uniform distribution with conditions
 def randomUniformDistribution(low, high, size):
     rand = np.random.uniform(low, high, size)
     return rand
 
 
+#Compute continuous moving average
 def liveMovingAverage(idx, slice, window):
     if idx < window -1:
         return None
@@ -23,6 +29,7 @@ def liveMovingAverage(idx, slice, window):
     return round(sum(slice) / window, 4)
 
 
+#Compute moving average for a series
 def seriesMovingAverage(series, window):
     i=0
     j=0
@@ -46,6 +53,7 @@ def seriesMovingAverage(series, window):
     return result
 
 
+#Compute continuous trailing window position
 def liveTrailingPosition(idx, current, slice, window):
     if idx < window -1:
         return None
@@ -56,7 +64,9 @@ def liveTrailingPosition(idx, current, slice, window):
     window_trailing_position = trailing_price / range
   
     return window_trailing_position
-  
+
+
+#Compute continuous trailing window positions for a series
 def seriesTrailingPosition(series, window):
     i=0
     j=0
@@ -82,6 +92,7 @@ def seriesTrailingPosition(series, window):
     return result
 
 
+#Generate random walk with boundary conditions
 def randomWalk1D(start, limit, steps):
     # Intialize Positions and Timestamp
     positions = [start['x']]
