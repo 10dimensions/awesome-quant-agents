@@ -5,16 +5,18 @@ from utils.math import simpleMovingAverage
 class MomentumAgent(Agent):
     def __init__(self, type, assetBalance, reserveBalance, 
                    momentumLow, momentumHigh, priceFeed):
-        self.priceFeed = priceFeed
+        super(MomentumAgent, self).__init__(type, assetBalance, reserveBalance, priceFeed)
+                     
         self.momentumLow = momentumLow
         self.momentumHigh = momentumHigh
+                     
         self.avgPriceLow = self.computeMovingAverage(momentumLow)
         self.avgPriceHigh =  self.computeMovingAverage(momentumHigh)
-        #print(self.priceFeed)
-        #print(self.avgPriceLow)
-        #print(self.avgPriceHigh)
-        super(MomentumAgent, self).__init__(type, assetBalance, reserveBalance)
+                     
 
+    def checkBalance(self, reqPrice):
+        if not self.assetBalance > 1 or not self.reserveBalance > 1:
+            return False
 
     def computeMovingAverage(self, val):
         return simpleMovingAverage(self.priceFeed, val)
@@ -24,6 +26,9 @@ class MomentumAgent(Agent):
         decision = Decisions.HOLD
         
         if self.avgPriceLow[timepoint] is None or self.avgPriceHigh[timepoint] is None:
+            return decision
+
+        if not self.checkBalance(self.priceFeed[timepoint]):
             return decision
       
         if timepoint is not None:

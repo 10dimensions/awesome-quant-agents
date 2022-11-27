@@ -4,15 +4,23 @@ import random
 
 class Agent:
   
-    def __init__(self, type, assetBalance, reserveBalance):
+    def __init__(self, type, assetBalance, reserveBalance, priceFeed):
         self.id = uuid.uuid4()
         self.type = type
         self.assetBalance = assetBalance
         self.reserveBalance = reserveBalance
+        self.priceFeed = priceFeed
+
+  
+    def checkBalance(self, reqPrice):
+        if not self.assetBalance > 0 or not self.reserveBalance > reqPrice:
+            return False
 
       
-    def makeOrder(self, timepoint=None):
-        decision = random.choice(list(Decisions))
+    def makeOrder(self, price, timepoint=None):
+        decisions = [ Decisions.BUY, Decisions.SELL]
+
+        decision = random.choice(decisions)
         return decision
 
   

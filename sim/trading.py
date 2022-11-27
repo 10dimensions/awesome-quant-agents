@@ -10,7 +10,7 @@ class TradingSim:
 
     def createAgentAction(self, price, timepoint=None):
         for agent in self.agents:
-            type = agent.makeOrder(timepoint)
+            type = agent.makeOrder(price, timepoint)
             qty = 1
             order = Order(agent, qty, price, type)
             self.orderBook.addOrder(order)
