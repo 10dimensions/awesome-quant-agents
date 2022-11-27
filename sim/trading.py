@@ -1,24 +1,28 @@
+import data.pricefeed as PriceFeed
 from trading.orderbook import Order
 from trading.orderbook import OrderBook
 
+
 class TradingSim:
-    def __init__(self, priceFeed, agents):
-        self.priceFeed = priceFeed
+  
+    def __init__(self, agents):
         self.agents = agents
         self.dat = []
         self.orderBook = OrderBook()
 
-    def createAgentAction(self, price, timepoint=None):
+  
+    def createAgentAction(self, qty, idx, timepoint=None):
         for agent in self.agents:
-            type = agent.makeOrder(price, timepoint)
-            qty = 1
+            price = PriceFeed.getPriceAtIndex(idx)
+            type = agent.makeOrder(qty, idx)
             order = Order(agent, qty, price, type)
             self.orderBook.addOrder(order)
 
-    def updateAgentBalanceSheet(self, timepoint, price):
+  
+    def updateAgentBalanceSheet(self, idx):
         r = {
-          'timepoint': timepoint,
-          'price': price
+          'timepoint': PriceFeed.getTimepointAtIndex(idx),
+          'price': PriceFeed.getPriceAtIndex(idx)
         }
       
         for iag, agent in enumerate(self.agents):
@@ -27,14 +31,17 @@ class TradingSim:
     
         return r
 
+  
     def simulateAgentRun(self):
         result = []
-        for idx, x in enumerate(self.priceFeed['timepoints']):     
-            self.createAgentAction(self.priceFeed['positions'][idx], x)
+        duration = PriceFeed.getPriceFeedInterval()
+        for idx in range(duration): 
+            qty = 1
+            self.createAgentAction(qty, idx)
             self.orderBook.processOrder()
             self.orderBook.clearBook()
     
-            r = self.updateAgentBalanceSheet(x, self.priceFeed['positions'][idx])
+            r = self.updateAgentBalanceSheet(idx)
             result.append(r)
     
         return result

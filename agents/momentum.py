@@ -14,21 +14,27 @@ class MomentumAgent(Agent):
         self.avgPriceHigh =  self.computeMovingAverage(momentumHigh)
                      
 
-    def checkBalance(self, reqPrice):
-        if not self.assetBalance > 1 or not self.reserveBalance > 1:
+    def checkBalance(self, unit, quote):
+        if not self.assetBalance < unit or not self.reserveBalance > quote:
             return False
 
     def computeMovingAverage(self, val):
         return simpleMovingAverage(self.priceFeed, val)
 
   
-    def makeOrder(self, timepoint=None):
+    def makeOrder(self, qty, idx):
         decision = Decisions.HOLD
+
+        price = self.priceFeed[idx]
+        timepoint = self.priceFeed[idx]
+
+        #if j < len(self.priceFeed) - momentumLow + 1:
+            
         
         if self.avgPriceLow[timepoint] is None or self.avgPriceHigh[timepoint] is None:
             return decision
 
-        if not self.checkBalance(self.priceFeed[timepoint]):
+        if not self.checkBalance(qty, price):
             return decision
       
         if timepoint is not None:

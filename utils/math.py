@@ -81,3 +81,19 @@ def trailingWindowPosition(series, window):
   
     return result
 
+
+def randomWalk1D(start, limit, steps):
+    # Intialize Positions and Timestamp
+    positions = [start['x']]
+    timepoints = arrayGenerator(start['t'], start['t'] + steps, 1) 
+    
+    # 1-dimensional directions 
+    directions = randomUniformDistribution(limit['min'], limit['max'], steps)
+  
+    for idx, x in enumerate(directions):
+        # Percentage change to n-1 value (rounded-off)
+        if not idx > len(directions)-2: 
+            step = positions[idx] + positions[idx] *(x/100)
+            positions.append(round(step,4))
+  
+    return { 'timepoints': timepoints, 'positions': positions }
