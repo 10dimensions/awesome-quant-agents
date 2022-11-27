@@ -24,8 +24,7 @@ class MeanRevertAgent(Agent):
         priceFeedInterval = PriceFeed.getPriceFeedInterval()
         decision = Decisions.HOLD
 
-        if not self.checkBalance(qty, price):
-            return decision
+        decisionCheck = self.checkBalance(qty, price)
 
         if not idx < priceFeedInterval - self.window + 1:
             return decision
@@ -46,6 +45,4 @@ class MeanRevertAgent(Agent):
             elif trail_pc > self.sellThreshold:
                 decision = Decisions.SELL
 
-        print(trail_pc)
-        print(decision)
-        return decision
+        return self.confirmOrder(decisionCheck, decision)

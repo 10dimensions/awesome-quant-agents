@@ -19,8 +19,7 @@ class MomentumAgent(Agent):
         timepoint = PriceFeed.getTimepointAtIndex(idx)
         priceFeedInterval = PriceFeed.getPriceFeedInterval()
 
-        if not self.checkBalance(qty, price):
-            return decision
+        decisionCheck = self.checkBalance(qty, price)
 
         if not idx < priceFeedInterval - self.momentumLow + 1:
             return decision
@@ -28,15 +27,12 @@ class MomentumAgent(Agent):
         if not idx < priceFeedInterval - self.momentumHigh + 1:
             return decision
         
-        #if j < len(self.priceFeed) - momentumLow + 1:
         seriesLow = PriceFeed.getPriceFeedSlice(idx, self.momentumLow)
         seriesHigh = PriceFeed.getPriceFeedSlice(idx, self.momentumHigh)
 
         avgPriceLow = liveMovingAverage(idx, seriesLow, self.momentumLow)
         avgPriceHigh = liveMovingAverage(idx, seriesHigh, self.momentumHigh)
 
-        #print(seriesHigh)
-        #print(avgPriceHigh)
         
         if avgPriceLow is None or avgPriceHigh is None:
             return decision
@@ -47,4 +43,4 @@ class MomentumAgent(Agent):
             else:
                 decision = Decisions.SELL
               
-        return decision
+        return self.confirmOrder(decisionCheck, decision)

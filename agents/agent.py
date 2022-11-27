@@ -15,21 +15,31 @@ class Agent:
   
     def checkBalance(self, unit, quote):
         if self.assetBalance < unit:
-            return False
+            return Decisions.SELL_FREEZE
           
         if self.reserveBalance < quote:
-            return False
+            return Decisions.BUY_FREEZE
 
         return True
+
+    def confirmOrder(self, decisionCheck, decision):
+        if decisionCheck == Decisions.SELL_FREEZE and decision == Decisions.SELL:
+            return Decisions.HOLD
+        elif decisionCheck == Decisions.BUY_FREEZE and decision == Decisions.BUY:
+            return Decisions.HOLD
+        else:
+            return decision
 
       
     def makeOrder(self, qty, idx):
         price = getPriceAtIndex(idx)
 
-        if not self.checkBalance(qty, price):
-            return Decisions.HOLD
+        decisionCheck = self.checkBalance(qty, price)
       
-        return random.choice([ Decisions.BUY, Decisions.SELL])
+        decision = random.choice([ Decisions.BUY, Decisions.SELL])
+
+        return self.confirmOrder(decisionCheck, decision)
+
 
   
     def settleOrder(self, asset, reserve):

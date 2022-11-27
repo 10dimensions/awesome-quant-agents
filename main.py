@@ -22,7 +22,7 @@ def simulateSimpleAgent():
     print('Simulating random agent...')
 
     #Iteration of PriceFeed (Default to first iteration)
-    PriceFeed.setSimIteration(4)
+    PriceFeed.setSimIteration(5)
     
     agent1 = Agent('random', 100, 100)
     agent2 = Agent('random', 100, 100)
@@ -40,7 +40,7 @@ def simulateMomentumAgent():
     print('Simulating Momentum Agent...')
 
     #Iteration of PriceFeed (Default to first iteration)
-    PriceFeed.setSimIteration(4)
+    PriceFeed.setSimIteration(5)
   
     agent1 = Agent('random', 100, 100)
     agent2 = Agent('random', 100, 100)
@@ -58,7 +58,7 @@ def simulateMeanRevertAgent():
     print('Simulating Mean Revert Agent...')
 
     #Iteration of PriceFeed (Default to first iteration)
-    PriceFeed.setSimIteration(4)
+    PriceFeed.setSimIteration(5)
   
     agent1 = Agent('random', 100, 100)
     agent2 = Agent('random', 100, 100)
@@ -76,8 +76,8 @@ def simulateMeanRevertAgent():
 
 if __name__ == "__main__":
     generateData()
-    #simulateSimpleAgent()
-    #simulateMomentumAgent()
+    simulateSimpleAgent()
+    simulateMomentumAgent()
     simulateMeanRevertAgent()
     
     
