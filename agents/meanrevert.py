@@ -1,6 +1,6 @@
 from agents.agent import Agent
 from utils.constants import Decisions
-from utils.math import simpleMovingAverage
+from utils.math import seriesMovingAverage
 from utils.math import percentageChange
 from utils.math import trailingWindowPosition
 

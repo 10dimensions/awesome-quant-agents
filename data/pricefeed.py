@@ -32,6 +32,10 @@ def getPriceFeedInterval():
     return len(data[simIteration]['timepoints'])
 
 
+def getPriceFeedSlice(idx, window):
+    return data[simIteration]["positions"][idx : idx + int(window)]
+
+
 def getTimepointAtIndex(idx):
     return data[simIteration]["timepoints"][idx]
 

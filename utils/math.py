@@ -15,26 +15,15 @@ def randomUniformDistribution(low, high, size):
     return rand
 
 
-def runningMovingAverage(currentTimePoint, series, window):
-    i=0
-    result = None
-
-    if currentTimePoint < window -1:
-        return result
-
-    #Iteration based on window size
-    if j < len(series) - window + 1:        
-        # Store elements in current window
-        slice = series[j : j + int(window)]
-      
-        # Average of current window
-        window_average = round(sum(slice) / window, 4)
-        result = window_average
-  
-    return result
+def runningMovingAverage(idx, slice, window):
+    if idx < window -1:
+        return None
+    
+    # Average of current window
+    return round(sum(slice) / window, 4)
 
 
-def simpleMovingAverage(series, window):
+def seriesMovingAverage(series, window):
     i=0
     j=0
     result = []
